@@ -4,6 +4,37 @@
   
     
     <entry>
+      <title>两数相加</title>
+      <link href="2021/03/09/%E4%B8%A4%E6%95%B0%E7%9B%B8%E5%8A%A0/"/>
+      <url>2021/03/09/%E4%B8%A4%E6%95%B0%E7%9B%B8%E5%8A%A0/</url>
+      
+        <content type="html"><![CDATA[<p>题目描述<a href="https://leetcode-cn.com/problems/add-two-numbers/">两数相加</a></p><h2 id="模拟计算解法"><a href="#模拟计算解法" class="headerlink" title="模拟计算解法"></a>模拟计算解法</h2><h3 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h3><ul><li>根据题目描述，我们可以知道两个链表都是逆序存储的，输出结果的链表同样是逆序存储的。这样我们不难想到对两个链表中同一位置的元素进行相加，通过遍历逐位相加得到结果。即两个链表当前位置的数字为<code>x</code>，<code>y</code>相加结果为<code>sum=x+y</code></li><li>在遍历两个链表的过程中，难免会出现两个链表长度不一致的情况，此时我们可以通过在对较短链表前补0的方式使两链表长度一致。如：<code>572+15=572+015=587</code>。</li><li>在逐位相加计算的时候，我们也应当考虑上一位置进位的问题，并在该位置相加计算的结束后，对进位值进行更新。设进位值为<code>carry</code>,则相加结果应为<code>sum=x+y+carry</code>,新的进位值为<code>carry=sum&gt;9?1:0</code>（采用三元表达式求新进位值，为不是采用<code>carry=sum/10</code>是为了减少一次运算从而提高效率）</li><li>两链表相加之后存储在新链表同一位置的数据元素值为<code>sum%10</code>。</li><li>在链表遍历相加结束后，若存在进位值为<code>1</code>，则因在新链表前添加节点，节点值为<code>1</code>，如：<code>75+25=100</code>。</li><li>对于链表问题，返回结果为头结点时，通常需要先初始化一个预先指针 pre，该指针的下一个节点指向真正的头结点head。使用预先指针的目的在于链表初始化时无可用节点值，而且链表构造过程需要指针移动，进而会导致头指针丢失，无法返回结果。<h3 id="解题代码"><a href="#解题代码" class="headerlink" title="解题代码"></a>解题代码</h3></li></ul><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> ListNode <span class="title">addTwoNumbers</span><span class="params">(ListNode l1, ListNode l2)</span> </span>&#123;</span><br><span class="line">        ListNode pre=<span class="keyword">new</span> ListNode(<span class="number">0</span>);</span><br><span class="line">        ListNode cur=pre;</span><br><span class="line">        <span class="keyword">int</span> carry=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span>(l1!=<span class="keyword">null</span>||l2!=<span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">int</span> x=l1==<span class="keyword">null</span>?<span class="number">0</span>:l1.val;</span><br><span class="line">            <span class="keyword">int</span> y=l2==<span class="keyword">null</span>?<span class="number">0</span>:l2.val;</span><br><span class="line">            <span class="keyword">int</span> sum=x+y+carry;</span><br><span class="line">            carry=sum&gt;<span class="number">9</span>?<span class="number">1</span>:<span class="number">0</span>;</span><br><span class="line">            sum=sum%<span class="number">10</span>;</span><br><span class="line">            cur.next=<span class="keyword">new</span> ListNode(sum);</span><br><span class="line">            cur=cur.next;</span><br><span class="line">            <span class="keyword">if</span> (l1!=<span class="keyword">null</span>)&#123;</span><br><span class="line">                l1=l1.next;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (l2!=<span class="keyword">null</span>)&#123;</span><br><span class="line">                l2=l2.next;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//链表遍历完carry值为1则，在输出链表尾添加一个节点，节点值为carry</span></span><br><span class="line">        <span class="keyword">if</span> (carry==<span class="number">1</span>)&#123;</span><br><span class="line">            cur.next=<span class="keyword">new</span> ListNode(carry);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> pre.next;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="复杂度分析"><a href="#复杂度分析" class="headerlink" title="复杂度分析"></a>复杂度分析</h3><p>时间复杂度:<code>O(max(m,n))</code>，其中<code>m,n</code>为两个链表的长度。我们要遍历两个链表的全部位置，而处理每个位置只需要<code>O(1)</code>的时间。<br>空间复杂度：<code>O(max(m,n))</code>。结果链表的长度最多为较长链表的长度<code>+1</code>。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 数据结构 </category>
+          
+          <category> 算法 </category>
+          
+          <category> LeetCode </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> LeetCode </tag>
+            
+            <tag> 算法 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>两数之和</title>
       <link href="2021/03/01/%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8C/"/>
       <url>2021/03/01/%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8C/</url>
@@ -13,7 +44,11 @@
       
       <categories>
           
-          <category> 数据结构 算法 </category>
+          <category> 数据结构 </category>
+          
+          <category> 算法 </category>
+          
+          <category> LeetCode </category>
           
       </categories>
       
@@ -21,6 +56,8 @@
         <tags>
             
             <tag> LeetCode </tag>
+            
+            <tag> 算法 </tag>
             
         </tags>
       
@@ -45,7 +82,7 @@
       
         <tags>
             
-            <tag> Markdown </tag>
+            <tag> MarkDown </tag>
             
         </tags>
       
